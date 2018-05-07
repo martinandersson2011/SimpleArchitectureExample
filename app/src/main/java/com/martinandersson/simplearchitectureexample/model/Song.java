@@ -9,28 +9,24 @@ import java.io.Serializable;
  */
 public class Song implements Serializable {
 
-    public static final String PROPERTY_ARTWORK_URL_100 = "artworkUrl100";
-    public static final String PROPERTY_ARTIST_NAME = "artistName";
-    public static final String PROPERTY_TRACK_NAME = "trackName";
+    @SerializedName("artworkUrl100")
+    private String artistUrl100;
 
-    @SerializedName(PROPERTY_ARTWORK_URL_100)
-    private String artistUrl;
-
-    @SerializedName(PROPERTY_ARTIST_NAME)
+    @SerializedName("artistName")
     private String artistName;
 
-    @SerializedName(PROPERTY_TRACK_NAME)
-    private String songName;
+    @SerializedName("trackName")
+    private String trackName;
 
     public Song() {
     }
 
-    public String getArtistUrl() {
-        return artistUrl;
+    public String getArtistUrl100() {
+        return artistUrl100;
     }
 
-    public void setArtistUrl(String artistUrl) {
-        this.artistUrl = artistUrl;
+    public void setArtistUrl100(String artistUrl100) {
+        this.artistUrl100 = artistUrl100;
     }
 
     public String getArtistName() {
@@ -41,12 +37,12 @@ public class Song implements Serializable {
         this.artistName = artistName;
     }
 
-    public String getSongName() {
-        return songName;
+    public String getTrackName() {
+        return trackName;
     }
 
-    public void setSongName(String songName) {
-        this.songName = songName;
+    public void setTrackName(String trackName) {
+        this.trackName = trackName;
     }
 
 }
