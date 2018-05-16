@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
 
     private SongsAdapter mAdapter;
+
     private List<Song> mSongs = new ArrayList<>();
-    private SongsResponse mSongsResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<SongsResponse>() {
             @Override
             public void onResponse(Call<SongsResponse> call, Response<SongsResponse> response) {
-                mSongsResponse = response.body();
-                mSongs = mSongsResponse.getSongs();
+                mSongs = response.body().getSongs();
                 mAdapter.updateData(mSongs);
                 mProgressBar.setVisibility(View.GONE);
                 mNoResults.setVisibility(mSongs != null && mSongs.size() > 0 ? View.GONE : View.VISIBLE);
