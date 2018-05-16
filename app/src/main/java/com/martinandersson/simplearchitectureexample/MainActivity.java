@@ -1,9 +1,13 @@
 package com.martinandersson.simplearchitectureexample;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,11 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.martinandersson.simplearchitectureexample.api.RestClient;
 import com.martinandersson.simplearchitectureexample.model.Song;
-import com.martinandersson.simplearchitectureexample.model.SongsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by martin.andersson on 5/7/18.
  */
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     public static final String DEFAULT_SEARCH_TERM = "rock";
 
     @BindView(R.id.search_text)
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SongsAdapter mAdapter;
 
-    private List<Song> mSongs = new ArrayList<>();
+    private SongsViewModel mSongsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +53,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mSearchText.setText(DEFAULT_SEARCH_TERM);
-        mSearchText.setSelection(mSearchText.getText().length());
-
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new SongsAdapter(this, mSongs);
-        mRecyclerView.setAdapter(mAdapter);
-
+        // Hide keyboard by default and setup keyboard to show a search button
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     handleSearch();
                     return true;
                 }
@@ -72,7 +65,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        handleSearch();
+        // Setup RecyclerView
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mAdapter = new SongsAdapter(this, new ArrayList<Song>());
+        mRecyclerView.setAdapter(mAdapter);
+
+        // Setup ViewModel and observe changes from LiveData
+        mSongsViewModel = ViewModelProviders.of(this).get(SongsViewModel.class);
+        mSongsViewModel.getSongsLiveData().observe(this, new Observer<List<Song>>() {
+            @Override
+            public void onChanged(@Nullable List<Song> songs) {
+                updateUIWithSongs(songs);
+            }
+        });
+
+        final List<Song> songs = mSongsViewModel.getSongsLiveData().getValue();
+        if (songs == null) {
+            // Start with a default search
+            mSearchText.setText(DEFAULT_SEARCH_TERM);
+            mSearchText.setSelection(mSearchText.getText().length());
+            handleSearch();
+        }
+
+    }
+
+    private void updateUIWithSongs(List<Song> songs) {
+        Log.w(TAG, "updateUIWithSongs");
+        mAdapter.updateData(songs);
+        mProgressBar.setVisibility(View.GONE);
+        mNoResults.setVisibility(songs != null && songs.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @OnClick(R.id.search_button)
@@ -84,26 +106,8 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         mNoResults.setVisibility(View.GONE);
 
-        String searchTerm = mSearchText.getText().toString();
-
-        Call<SongsResponse> call = RestClient.getSearchApi().getItunesSearchResults(searchTerm);
-        call.enqueue(new Callback<SongsResponse>() {
-            @Override
-            public void onResponse(Call<SongsResponse> call, Response<SongsResponse> response) {
-                mSongs = response.body().getSongs();
-                mAdapter.updateData(mSongs);
-                mProgressBar.setVisibility(View.GONE);
-                mNoResults.setVisibility(mSongs != null && mSongs.size() > 0 ? View.GONE : View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<SongsResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "No results found", Toast.LENGTH_SHORT).show();
-                mProgressBar.setVisibility(View.GONE);
-                mNoResults.setVisibility(View.VISIBLE);
-            }
-        });
-
+        // Ask our songs view model to search for songs
+        mSongsViewModel.searchForSongs(mSearchText.getText().toString());
     }
 
 }
