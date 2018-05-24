@@ -53,7 +53,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         final Song song = mSongs.get(position);
         holder.rowArtist.setText(song.getArtistName());
         holder.rowSong.setText(song.getTrackName());
-        Picasso.with(mContext).load(song.getArtistUrl100()).into(holder.rowImage);
+        Picasso.get().load(song.getArtistUrl100()).into(holder.rowImage);
 
         holder.rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override

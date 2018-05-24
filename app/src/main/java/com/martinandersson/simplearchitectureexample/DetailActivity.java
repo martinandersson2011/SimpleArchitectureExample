@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             if (song != null) {
                 mArtist.setText(song.getArtistName());
                 mSong.setText(song.getTrackName());
-                Picasso.with(this).load(song.getArtistUrl100()).into(mImage);
+                Picasso.get().load(song.getArtistUrl100()).into(mImage);
             }
         }
     }
