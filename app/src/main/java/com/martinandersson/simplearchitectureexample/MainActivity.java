@@ -1,14 +1,11 @@
 package com.martinandersson.simplearchitectureexample;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -55,14 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Hide keyboard by default and setup keyboard to show a search button
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    handleSearch();
-                    return true;
-                }
-                return false;
+        mSearchText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                handleSearch();
+                return true;
             }
+            return false;
         });
 
         // Setup RecyclerView
@@ -73,12 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup ViewModel and observe changes from LiveData
         mSongsViewModel = ViewModelProviders.of(this).get(SongsViewModel.class);
-        mSongsViewModel.getSongsLiveData().observe(this, new Observer<List<Song>>() {
-            @Override
-            public void onChanged(@Nullable List<Song> songs) {
-                updateUIWithSongs(songs);
-            }
-        });
+        mSongsViewModel.getSongsLiveData().observe(this, songs -> updateUIWithSongs(songs));
 
         final List<Song> songs = mSongsViewModel.getSongsLiveData().getValue();
         if (songs == null) {

@@ -55,13 +55,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         holder.rowSong.setText(song.getTrackName());
         Picasso.get().load(song.getArtistUrl100()).into(holder.rowImage);
 
-        holder.rowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.ARG_SONG, song);
-                mContext.startActivity(intent);
-            }
+        holder.rowLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra(DetailActivity.ARG_SONG, song);
+            mContext.startActivity(intent);
         });
 
     }

@@ -36,13 +36,13 @@ public class SongsViewModel extends ViewModel {
                 if (songsResponse != null) {
                     mSongsLiveData.postValue(songsResponse.getSongs());
                 } else {
-                    mSongsLiveData.postValue(new ArrayList<Song>());
+                    mSongsLiveData.postValue(new ArrayList<>());
                 }
             }
 
             @Override
             public void onFailure(Call<SongsResponse> call, Throwable t) {
-                mSongsLiveData.postValue(new ArrayList<Song>());
+                mSongsLiveData.postValue(new ArrayList<>());
             }
         });
     }
