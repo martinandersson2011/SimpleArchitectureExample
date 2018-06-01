@@ -1,51 +1,31 @@
 package com.martinandersson.simplearchitectureexample.ui.list;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
-import com.martinandersson.simplearchitectureexample.data.RestClient;
 import com.martinandersson.simplearchitectureexample.data.Song;
-import com.martinandersson.simplearchitectureexample.data.SongsResponse;
+import com.martinandersson.simplearchitectureexample.data.SongsRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivityViewModel extends ViewModel {
 
     private static final String TAG = MainActivityViewModel.class.getSimpleName();
 
-    private MutableLiveData<List<Song>> mSongsLiveData = new MutableLiveData<>();
+    private SongsRepository mSongsRepository;
+    private LiveData<List<Song>> mSongsLiveData;
+
+    public MainActivityViewModel(SongsRepository repository) {
+        mSongsRepository = repository;
+        mSongsLiveData = repository.getSongsLiveData();
+    }
 
     public LiveData<List<Song>> getSongsLiveData() {
         return mSongsLiveData;
     }
 
     public void searchForSongs(String searchTerm) {
-        Log.w(TAG, "searchForSongs: " + searchTerm);
-        Call<SongsResponse> call = RestClient.getSearchApi().getItunesSearchResults(searchTerm);
-        call.enqueue(new Callback<SongsResponse>() {
-            @Override
-            public void onResponse(Call<SongsResponse> call, Response<SongsResponse> response) {
-                final SongsResponse songsResponse = response.body();
-                if (songsResponse != null) {
-                    mSongsLiveData.postValue(songsResponse.getSongs());
-                } else {
-                    mSongsLiveData.postValue(new ArrayList<>());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SongsResponse> call, Throwable t) {
-                mSongsLiveData.postValue(new ArrayList<>());
-            }
-        });
+        mSongsRepository.searchForSongs(searchTerm);
     }
-
 
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
 import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // Setup ViewModel and observe changes from LiveData
-        mSongsViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory();
+        mSongsViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         mSongsViewModel.getSongsLiveData().observe(this, songs -> updateUIWithSongs(songs));
 
         final List<Song> songs = mSongsViewModel.getSongsLiveData().getValue();
