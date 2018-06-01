@@ -3,7 +3,7 @@ package com.martinandersson.simplearchitectureexample.ui.list;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.martinandersson.simplearchitectureexample.data.Track;
+import com.martinandersson.simplearchitectureexample.data.database.Track;
 import com.martinandersson.simplearchitectureexample.data.TracksRepository;
 
 import java.util.List;

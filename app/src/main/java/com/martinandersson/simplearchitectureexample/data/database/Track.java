@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample.data;
+package com.martinandersson.simplearchitectureexample.data.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample.data;
+package com.martinandersson.simplearchitectureexample.data.network;
 
 
 import retrofit2.Call;

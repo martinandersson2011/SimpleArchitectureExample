@@ -3,6 +3,10 @@ package com.martinandersson.simplearchitectureexample.data;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
+import com.martinandersson.simplearchitectureexample.data.database.Track;
+import com.martinandersson.simplearchitectureexample.data.database.TrackDao;
+import com.martinandersson.simplearchitectureexample.data.network.RestClient;
+import com.martinandersson.simplearchitectureexample.data.network.TracksResponse;
 import com.martinandersson.simplearchitectureexample.utilities.AppExecutors;
 
 import java.util.List;

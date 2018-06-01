@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample.data;
+package com.martinandersson.simplearchitectureexample.data.network;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.Track;
+import com.martinandersson.simplearchitectureexample.data.database.Track;
 import com.martinandersson.simplearchitectureexample.utilities.InjectorUtils;
 
 import java.util.ArrayList;

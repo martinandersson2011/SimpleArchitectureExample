@@ -2,7 +2,7 @@ package com.martinandersson.simplearchitectureexample.utilities;
 
 import android.content.Context;
 
-import com.martinandersson.simplearchitectureexample.data.TracksDatabase;
+import com.martinandersson.simplearchitectureexample.data.database.TracksDatabase;
 import com.martinandersson.simplearchitectureexample.data.TracksRepository;
 import com.martinandersson.simplearchitectureexample.ui.list.MainActivityViewModelFactory;
 

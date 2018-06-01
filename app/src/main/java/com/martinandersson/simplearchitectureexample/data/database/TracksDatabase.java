@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample.data;
+package com.martinandersson.simplearchitectureexample.data.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;

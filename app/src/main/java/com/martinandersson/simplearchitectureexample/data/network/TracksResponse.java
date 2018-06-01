@@ -1,6 +1,7 @@
-package com.martinandersson.simplearchitectureexample.data;
+package com.martinandersson.simplearchitectureexample.data.network;
 
 import com.google.gson.annotations.SerializedName;
+import com.martinandersson.simplearchitectureexample.data.database.Track;
 
 import java.io.Serializable;
 import java.util.List;
