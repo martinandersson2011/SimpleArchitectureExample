@@ -44,6 +44,10 @@ public class TracksRepository {
         return mTrackDao.getTracks();
     }
 
+    public LiveData<Track> getTrackWithId(int trackId) {
+        return mTrackDao.getTrackById(trackId);
+    }
+
     public void searchOnITunes(String searchTerm) {
         Log.w(TAG, "searchOnITunes: " + searchTerm);
         Call<TracksResponse> call = RestClient.getSearchApi().getItunesSearchResults(searchTerm);

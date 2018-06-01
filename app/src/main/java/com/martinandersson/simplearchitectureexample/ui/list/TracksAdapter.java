@@ -59,7 +59,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.ViewHolder
 
         holder.rowLayout.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, DetailActivity.class);
-            intent.putExtra(DetailActivity.ARG_TRACK, track);
+            intent.putExtra(DetailActivity.ARG_TRACK_ID, track.getTrackId());
             mContext.startActivity(intent);
         });
 

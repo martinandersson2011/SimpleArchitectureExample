@@ -5,15 +5,13 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 /**
  * Created by martin.andersson on 5/7/18.
  */
 
 
 @Entity(tableName = "tracks")
-public class Track implements Serializable {
+public class Track {
 
     @PrimaryKey
     @SerializedName("trackId")

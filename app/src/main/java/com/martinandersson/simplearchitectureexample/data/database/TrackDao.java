@@ -6,8 +6,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.martinandersson.simplearchitectureexample.data.database.Track;
-
 import java.util.List;
 
 @Dao
@@ -20,7 +18,7 @@ public interface TrackDao {
     LiveData<List<Track>> getTracks();
 
     @Query("SELECT * FROM tracks WHERE trackId = :trackId")
-    LiveData<Track> getTrackById(String trackId);
+    LiveData<Track> getTrackById(int trackId);
 
     @Query("DELETE FROM tracks")
     void deleteAllTracks();
