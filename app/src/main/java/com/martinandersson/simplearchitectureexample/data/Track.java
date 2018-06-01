@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 
 
-@Entity(tableName = "songs")
-public class SongEntity implements Serializable {
+@Entity(tableName = "tracks")
+public class Track implements Serializable {
 
     @PrimaryKey
     @SerializedName("trackId")
@@ -28,7 +28,7 @@ public class SongEntity implements Serializable {
     @SerializedName("trackName")
     private String trackName;
 
-    public SongEntity() {
+    public Track() {
     }
 
     public int getTrackId() {

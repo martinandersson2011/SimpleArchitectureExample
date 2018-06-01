@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/artist"
+        android:id="@+id/artist_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -18,15 +18,15 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/song"
+        android:id="@+id/track_name_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/artist"
+        android:layout_below="@+id/artist_textview"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/track_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"

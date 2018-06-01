@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by martin.andersson on 5/7/18.
  */
-public class SongsResponse implements Serializable {
+public class TracksResponse implements Serializable {
     public static final String PROPERTY_RESULT_COUNT = "resultCount";
     public static final String PROPERTY_RESULTS = "results";
 
@@ -16,17 +16,17 @@ public class SongsResponse implements Serializable {
     private int resultCount;
 
     @SerializedName(PROPERTY_RESULTS)
-    private List<SongEntity> songs;
+    private List<Track> tracks;
 
-    public SongsResponse() {
+    public TracksResponse() {
     }
 
-    public List<SongEntity> getSongs() {
-        return songs;
+    public List<Track> getTracks() {
+        return tracks;
     }
 
-    public void setSongs(List<SongEntity> songs) {
-        this.songs = songs;
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
     }
 
     public int getResultCount() {

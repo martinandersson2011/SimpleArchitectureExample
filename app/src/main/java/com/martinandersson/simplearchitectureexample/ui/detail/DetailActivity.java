@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.SongEntity;
+import com.martinandersson.simplearchitectureexample.data.Track;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -18,16 +18,16 @@ import butterknife.ButterKnife;
  */
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String ARG_SONG = "ARG_SONG";
+    public static final String ARG_TRACK = "ARG_TRACK";
 
-    @BindView(R.id.image)
-    ImageView mImage;
+    @BindView(R.id.track_imageview)
+    ImageView mTrackImageView;
 
-    @BindView(R.id.artist)
-    TextView mArtist;
+    @BindView(R.id.artist_textview)
+    TextView mArtistTextView;
 
-    @BindView(R.id.song)
-    TextView mSong;
+    @BindView(R.id.track_name_textview)
+    TextView mTrackNameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +38,12 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            SongEntity song = (SongEntity) intent.getSerializableExtra(ARG_SONG);
+            Track track = (Track) intent.getSerializableExtra(ARG_TRACK);
 
-            if (song != null) {
-                mArtist.setText(song.getArtistName());
-                mSong.setText(song.getTrackName());
-                Picasso.get().load(song.getArtistUrl100()).into(mImage);
+            if (track != null) {
+                mArtistTextView.setText(track.getArtistName());
+                mTrackNameTextView.setText(track.getTrackName());
+                Picasso.get().load(track.getArtistUrl100()).into(mTrackImageView);
             }
         }
     }

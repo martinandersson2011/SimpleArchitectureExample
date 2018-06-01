@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.SongEntity;
+import com.martinandersson.simplearchitectureexample.data.Track;
 import com.martinandersson.simplearchitectureexample.ui.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
@@ -23,18 +23,18 @@ import butterknife.ButterKnife;
 /**
  * Created by martin.andersson on 5/7/18.
  */
-public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
+public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<SongEntity> mSongs;
+    private List<Track> mTracks;
 
-    SongsAdapter(Context context, List<SongEntity> songs) {
+    TracksAdapter(Context context, List<Track> tracks) {
         mContext = context;
-        mSongs = songs;
+        mTracks = tracks;
     }
 
-    public void updateData(List<SongEntity> songs) {
-        mSongs = songs;
+    public void updateData(List<Track> tracks) {
+        mTracks = tracks;
         notifyDataSetChanged();
     }
 
@@ -45,21 +45,21 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_song, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_track, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        final SongEntity song = mSongs.get(position);
-        holder.rowArtist.setText(song.getArtistName());
-        holder.rowSong.setText(song.getTrackName());
-        Picasso.get().load(song.getArtistUrl100()).into(holder.rowImage);
+        final Track track = mTracks.get(position);
+        holder.rowArtistTextView.setText(track.getArtistName());
+        holder.rowTrackNameTextView.setText(track.getTrackName());
+        Picasso.get().load(track.getArtistUrl100()).into(holder.rowImageView);
 
         holder.rowLayout.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, DetailActivity.class);
-            intent.putExtra(DetailActivity.ARG_SONG, song);
+            intent.putExtra(DetailActivity.ARG_TRACK, track);
             mContext.startActivity(intent);
         });
 
@@ -67,7 +67,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mSongs.size();
+        return mTracks.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,13 +75,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         RelativeLayout rowLayout;
 
         @BindView(R.id.row_image)
-        ImageView rowImage;
+        ImageView rowImageView;
 
         @BindView(R.id.row_artist)
-        TextView rowArtist;
+        TextView rowArtistTextView;
 
-        @BindView(R.id.row_song)
-        TextView rowSong;
+        @BindView(R.id.row_track_name)
+        TextView rowTrackNameTextView;
 
         ViewHolder(View v) {
             super(v);

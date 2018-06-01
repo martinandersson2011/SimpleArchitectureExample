@@ -3,13 +3,13 @@ package com.martinandersson.simplearchitectureexample.ui.list;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.martinandersson.simplearchitectureexample.data.SongsRepository;
+import com.martinandersson.simplearchitectureexample.data.TracksRepository;
 
 public class MainActivityViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private final SongsRepository mRepository;
+    private final TracksRepository mRepository;
 
-    public MainActivityViewModelFactory(SongsRepository repository) {
+    public MainActivityViewModelFactory(TracksRepository repository) {
         this.mRepository = repository;
     }
 

@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.SongEntity;
+import com.martinandersson.simplearchitectureexample.data.Track;
 import com.martinandersson.simplearchitectureexample.utilities.InjectorUtils;
 
 import java.util.ArrayList;
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.no_results)
     TextView mNoResults;
 
-    private SongsAdapter mAdapter;
+    private TracksAdapter mAdapter;
 
-    private MainActivityViewModel mSongsViewModel;
+    private MainActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +62,16 @@ public class MainActivity extends AppCompatActivity {
         // Setup RecyclerView
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new SongsAdapter(this, new ArrayList<SongEntity>());
+        mAdapter = new TracksAdapter(this, new ArrayList<Track>());
         mRecyclerView.setAdapter(mAdapter);
 
         // Setup ViewModel and observe changes from LiveData
         MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(this.getApplicationContext());
-        mSongsViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
-        mSongsViewModel.getSongsLiveData().observe(this, songs -> updateUIWithSongs(songs));
+        mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
+        mViewModel.getTracks().observe(this, tracks -> updateUIWithTracks(tracks));
 
-        final List<SongEntity> songs = mSongsViewModel.getSongsLiveData().getValue();
-        if (songs == null) {
+        final List<Track> tracks = mViewModel.getTracks().getValue();
+        if (tracks == null) {
             // Start with a default search
             mSearchText.setText(DEFAULT_SEARCH_TERM);
             mSearchText.setSelection(mSearchText.getText().length());
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateUIWithSongs(List<SongEntity> songs) {
-        Log.w(TAG, "updateUIWithSongs");
-        mAdapter.updateData(songs);
-        mNoResults.setVisibility(songs != null && songs.size() > 0 ? View.GONE : View.VISIBLE);
+    private void updateUIWithTracks(List<Track> tracks) {
+        Log.w(TAG, "updateUIWithTracks");
+        mAdapter.updateData(tracks);
+        mNoResults.setVisibility(tracks != null && tracks.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
     @OnClick(R.id.search_button)
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
 
-        // Ask our songs view model to search for songs
-        mSongsViewModel.searchForSongs(mSearchText.getText().toString());
+        // Ask our view model to search for tracks
+        mViewModel.performSearch(mSearchText.getText().toString());
     }
 
 }

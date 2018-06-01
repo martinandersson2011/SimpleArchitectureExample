@@ -9,18 +9,18 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface SongDao {
+public interface TrackDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void bulkInsert(List<SongEntity> songs);
+    void bulkInsert(List<Track> tracks);
 
-    @Query("SELECT * FROM songs")
-    LiveData<List<SongEntity>> getSongs();
+    @Query("SELECT * FROM tracks")
+    LiveData<List<Track>> getTracks();
 
-    @Query("SELECT * FROM songs WHERE trackId = :trackId")
-    LiveData<SongEntity> getSongByTrackId(String trackId);
+    @Query("SELECT * FROM tracks WHERE trackId = :trackId")
+    LiveData<Track> getTrackById(String trackId);
 
-    @Query("DELETE FROM songs")
-    void deleteAllSongs();
+    @Query("DELETE FROM tracks")
+    void deleteAllTracks();
 
 }
