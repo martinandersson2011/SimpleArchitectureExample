@@ -21,13 +21,13 @@ public class DetailActivity extends AppCompatActivity {
     public static final String ARG_SONG = "ARG_SONG";
 
     @BindView(R.id.image)
-    public ImageView mImage;
+    ImageView mImage;
 
     @BindView(R.id.artist)
-    public TextView mArtist;
+    TextView mArtist;
 
     @BindView(R.id.song)
-    public TextView mSong;
+    TextView mSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
