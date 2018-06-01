@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample;
+package com.martinandersson.simplearchitectureexample.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.martinandersson.simplearchitectureexample.model.Song;
+import com.martinandersson.simplearchitectureexample.R;
+import com.martinandersson.simplearchitectureexample.data.Song;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -20,13 +21,13 @@ public class DetailActivity extends AppCompatActivity {
     public static final String ARG_SONG = "ARG_SONG";
 
     @BindView(R.id.image)
-    ImageView mImage;
+    public ImageView mImage;
 
     @BindView(R.id.artist)
-    TextView mArtist;
+    public TextView mArtist;
 
     @BindView(R.id.song)
-    TextView mSong;
+    public TextView mSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

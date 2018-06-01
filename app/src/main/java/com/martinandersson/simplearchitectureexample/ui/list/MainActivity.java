@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample;
+package com.martinandersson.simplearchitectureexample.ui.list;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.martinandersson.simplearchitectureexample.model.Song;
+import com.martinandersson.simplearchitectureexample.R;
+import com.martinandersson.simplearchitectureexample.data.Song;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SongsAdapter mAdapter;
 
-    private SongsViewModel mSongsViewModel;
+    private MainActivityViewModel mSongsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // Setup ViewModel and observe changes from LiveData
-        mSongsViewModel = ViewModelProviders.of(this).get(SongsViewModel.class);
+        mSongsViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mSongsViewModel.getSongsLiveData().observe(this, songs -> updateUIWithSongs(songs));
 
         final List<Song> songs = mSongsViewModel.getSongsLiveData().getValue();

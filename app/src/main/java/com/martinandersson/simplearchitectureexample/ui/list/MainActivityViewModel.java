@@ -1,13 +1,13 @@
-package com.martinandersson.simplearchitectureexample;
+package com.martinandersson.simplearchitectureexample.ui.list;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
-import com.martinandersson.simplearchitectureexample.api.RestClient;
-import com.martinandersson.simplearchitectureexample.model.Song;
-import com.martinandersson.simplearchitectureexample.model.SongsResponse;
+import com.martinandersson.simplearchitectureexample.data.RestClient;
+import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.data.SongsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SongsViewModel extends ViewModel {
+public class MainActivityViewModel extends ViewModel {
 
-    private static final String TAG = SongsViewModel.class.getSimpleName();
+    private static final String TAG = MainActivityViewModel.class.getSimpleName();
 
     private MutableLiveData<List<Song>> mSongsLiveData = new MutableLiveData<>();
 

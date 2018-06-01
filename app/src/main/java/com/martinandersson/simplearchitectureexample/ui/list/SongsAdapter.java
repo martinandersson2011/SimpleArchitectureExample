@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample;
+package com.martinandersson.simplearchitectureexample.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.martinandersson.simplearchitectureexample.model.Song;
+import com.martinandersson.simplearchitectureexample.R;
+import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.ui.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

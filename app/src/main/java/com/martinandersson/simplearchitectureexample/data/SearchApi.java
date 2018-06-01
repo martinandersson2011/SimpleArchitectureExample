@@ -1,7 +1,7 @@
-package com.martinandersson.simplearchitectureexample.api;
+package com.martinandersson.simplearchitectureexample.data;
 
 
-import com.martinandersson.simplearchitectureexample.model.SongsResponse;
+import com.martinandersson.simplearchitectureexample.data.SongsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

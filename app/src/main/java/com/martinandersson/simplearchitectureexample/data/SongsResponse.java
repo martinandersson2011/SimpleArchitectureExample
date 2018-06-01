@@ -1,4 +1,4 @@
-package com.martinandersson.simplearchitectureexample.model;
+package com.martinandersson.simplearchitectureexample.data;
 
 import com.google.gson.annotations.SerializedName;
 
