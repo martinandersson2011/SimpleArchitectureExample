@@ -16,16 +16,16 @@ public class SongsResponse implements Serializable {
     private int resultCount;
 
     @SerializedName(PROPERTY_RESULTS)
-    private List<Song> songs;
+    private List<SongEntity> songs;
 
     public SongsResponse() {
     }
 
-    public List<Song> getSongs() {
+    public List<SongEntity> getSongs() {
         return songs;
     }
 
-    public void setSongs(List<Song> songs) {
+    public void setSongs(List<SongEntity> songs) {
         this.songs = songs;
     }
 

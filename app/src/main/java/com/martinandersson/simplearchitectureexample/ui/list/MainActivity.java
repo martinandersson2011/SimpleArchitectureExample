@@ -11,11 +11,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.data.SongEntity;
 import com.martinandersson.simplearchitectureexample.utilities.InjectorUtils;
 
 import java.util.ArrayList;
@@ -39,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.no_results)
     TextView mNoResults;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
 
     private SongsAdapter mAdapter;
 
@@ -65,15 +62,15 @@ public class MainActivity extends AppCompatActivity {
         // Setup RecyclerView
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new SongsAdapter(this, new ArrayList<Song>());
+        mAdapter = new SongsAdapter(this, new ArrayList<SongEntity>());
         mRecyclerView.setAdapter(mAdapter);
 
         // Setup ViewModel and observe changes from LiveData
-        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory();
+        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(this.getApplicationContext());
         mSongsViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         mSongsViewModel.getSongsLiveData().observe(this, songs -> updateUIWithSongs(songs));
 
-        final List<Song> songs = mSongsViewModel.getSongsLiveData().getValue();
+        final List<SongEntity> songs = mSongsViewModel.getSongsLiveData().getValue();
         if (songs == null) {
             // Start with a default search
             mSearchText.setText(DEFAULT_SEARCH_TERM);
@@ -83,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateUIWithSongs(List<Song> songs) {
+    private void updateUIWithSongs(List<SongEntity> songs) {
         Log.w(TAG, "updateUIWithSongs");
         mAdapter.updateData(songs);
-        mProgressBar.setVisibility(View.GONE);
         mNoResults.setVisibility(songs != null && songs.size() > 0 ? View.GONE : View.VISIBLE);
     }
 
@@ -95,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
         // Hide keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
-
-        mProgressBar.setVisibility(View.VISIBLE);
-        mNoResults.setVisibility(View.GONE);
 
         // Ask our songs view model to search for songs
         mSongsViewModel.searchForSongs(mSearchText.getText().toString());

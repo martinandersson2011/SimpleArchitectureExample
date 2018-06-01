@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.data.SongEntity;
 import com.martinandersson.simplearchitectureexample.ui.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
@@ -26,14 +26,14 @@ import butterknife.ButterKnife;
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<Song> mSongs;
+    private List<SongEntity> mSongs;
 
-    SongsAdapter(Context context, List<Song> songs) {
+    SongsAdapter(Context context, List<SongEntity> songs) {
         mContext = context;
         mSongs = songs;
     }
 
-    public void updateData(List<Song> songs) {
+    public void updateData(List<SongEntity> songs) {
         mSongs = songs;
         notifyDataSetChanged();
     }
@@ -52,7 +52,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        final Song song = mSongs.get(position);
+        final SongEntity song = mSongs.get(position);
         holder.rowArtist.setText(song.getArtistName());
         holder.rowSong.setText(song.getTrackName());
         Picasso.get().load(song.getArtistUrl100()).into(holder.rowImage);

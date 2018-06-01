@@ -1,10 +1,10 @@
 package com.martinandersson.simplearchitectureexample.data;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.martinandersson.simplearchitectureexample.utilities.AppExecutors;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,23 +19,25 @@ public class SongsRepository {
     private static final Object LOCK = new Object();
     private static SongsRepository sInstance;
 
-    private SongsRepository() {
+    private final SongDao mSongDao;
+    private final AppExecutors mExecutors;
+
+    private SongsRepository(SongDao songDao, AppExecutors executors) {
+        mSongDao = songDao;
+        mExecutors = executors;
     }
 
-    public synchronized static SongsRepository getInstance() {
+    public synchronized static SongsRepository getInstance(SongDao songDao, AppExecutors executors) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new SongsRepository();
-                Log.d(TAG, "getInstance -> new repository");
+                sInstance = new SongsRepository(songDao, executors);
             }
         }
         return sInstance;
     }
 
-    private MutableLiveData<List<Song>> mSongsLiveData = new MutableLiveData<>();
-
-    public LiveData<List<Song>> getSongsLiveData() {
-        return mSongsLiveData;
+    public LiveData<List<SongEntity>> getSongsLiveData() {
+        return mSongDao.getSongs();
     }
 
     public void searchForSongs(String searchTerm) {
@@ -45,16 +47,19 @@ public class SongsRepository {
             @Override
             public void onResponse(Call<SongsResponse> call, Response<SongsResponse> response) {
                 final SongsResponse songsResponse = response.body();
-                if (songsResponse != null) {
-                    mSongsLiveData.postValue(songsResponse.getSongs());
-                } else {
-                    mSongsLiveData.postValue(new ArrayList<>());
-                }
+                mExecutors.diskIO().execute(() -> {
+                    if (songsResponse != null) {
+                        mSongDao.deleteAllSongs();
+                        mSongDao.bulkInsert(songsResponse.getSongs());
+                    } else {
+                        mSongDao.deleteAllSongs();
+                    }
+                });
             }
 
             @Override
             public void onFailure(Call<SongsResponse> call, Throwable t) {
-                mSongsLiveData.postValue(new ArrayList<>());
+                Log.w(TAG, "searchForSongs - onFailure");
             }
         });
     }

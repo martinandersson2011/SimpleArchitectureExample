@@ -1,5 +1,8 @@
 package com.martinandersson.simplearchitectureexample.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -7,7 +10,14 @@ import java.io.Serializable;
 /**
  * Created by martin.andersson on 5/7/18.
  */
-public class Song implements Serializable {
+
+
+@Entity(tableName = "songs")
+public class SongEntity implements Serializable {
+
+    @PrimaryKey
+    @SerializedName("trackId")
+    private int trackId;
 
     @SerializedName("artworkUrl100")
     private String artistUrl100;
@@ -18,7 +28,15 @@ public class Song implements Serializable {
     @SerializedName("trackName")
     private String trackName;
 
-    public Song() {
+    public SongEntity() {
+    }
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public String getArtistUrl100() {

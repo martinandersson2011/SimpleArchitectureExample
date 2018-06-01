@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
-import com.martinandersson.simplearchitectureexample.data.Song;
+import com.martinandersson.simplearchitectureexample.data.SongEntity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            Song song = (Song) intent.getSerializableExtra(ARG_SONG);
+            SongEntity song = (SongEntity) intent.getSerializableExtra(ARG_SONG);
 
             if (song != null) {
                 mArtist.setText(song.getArtistName());
