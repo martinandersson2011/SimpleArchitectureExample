@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/row_layout"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/activity_horizontal_margin">
@@ -9,22 +11,30 @@
         android:id="@+id/row_image"
         android:layout_width="@dimen/thumbnail_size"
         android:layout_height="@dimen/thumbnail_size"
-        android:contentDescription="@string/cd_thumbnail"/>
+        android:contentDescription="@string/cd_thumbnail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/row_artist"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_toRightOf="@+id/row_image"
-        android:textStyle="bold"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/row_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/row_track_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/row_artist"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_toRightOf="@+id/row_image"/>
+        app:layout_constraintEnd_toEndOf="@+id/row_artist"
+        app:layout_constraintLeft_toRightOf="@+id/row_image"
+        app:layout_constraintStart_toStartOf="@+id/row_artist"
+        app:layout_constraintTop_toBottomOf="@+id/row_artist" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

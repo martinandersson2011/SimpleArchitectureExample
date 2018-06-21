@@ -2,12 +2,12 @@ package com.martinandersson.simplearchitectureexample.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.martinandersson.simplearchitectureexample.R;
@@ -72,7 +72,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.row_layout)
-        RelativeLayout rowLayout;
+        ConstraintLayout rowLayout;
 
         @BindView(R.id.row_image)
         ImageView rowImageView;
